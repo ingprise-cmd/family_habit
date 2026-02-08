@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>습관 쑥쑥! - 사용자 선택</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container landing-container">
+        <header>
+            <h1>우리가족 습관 쑥쑥</h1>
+            <p>오늘도 힘차게 습관을 길러봐요!</p>
+        </header>
+
+        <main class="user-selection">
+            <!-- Stats Link (Top) -->
+            <a href="stats.html" class="user-card stats-card-full">
+                <div class="user-avatar" style="background: #bbdefb;">🏆</div>
+                <div class="stats-text">
+                    <h2>점수판 보기</h2>
+                    <p>누가누가 잘했나?</p>
+                </div>
+            </a>
+
+            <!-- User Grid (Horizontal) -->
+            <div class="user-grid">
+                <!-- 수아 -->
+                <a href="sua.html" class="user-card child-card">
+                    <div class="user-avatar">👧</div>
+                    <h2>수아</h2>
+                </a>
+
+                <!-- 한 -->
+                <a href="han.html" class="user-card child-card">
+                    <div class="user-avatar">👦</div>
+                    <h2>한</h2>
+                </a>
+
+                <!-- 부모님 -->
+                <div class="user-card parent-card" onclick="checkParentPassword()">
+                    <div class="user-avatar">👑</div>
+                    <h2>부모님</h2>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- 비밀번호 모달 -->
+    <div id="password-modal" class="modal hidden">
+        <div class="modal-content">
+            <h3>비밀번호를 입력하세요</h3>
+            <input type="password" id="password-input" placeholder="비밀번호 입력">
+            <div class="modal-buttons">
+                <button onclick="closeModal()" class="cancel-btn">취소</button>
+                <button onclick="verifyPassword()" class="confirm-btn">확인</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

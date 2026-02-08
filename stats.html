@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>가족 습관 현황표</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+    <style>
+        .stats-container {
+            max-width: 800px;
+            /* Wider for table */
+        }
+
+        .child-stats-section {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .stats-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .stats-header h2 {
+            margin: 0 0 0 10px;
+            font-size: 1.8rem;
+        }
+
+        .total-summary {
+            margin-left: auto;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background-color: #f9f9f9;
+            color: #666;
+        }
+
+        .icon-cell {
+            font-size: 1.5rem;
+            width: 50px;
+            text-align: center;
+        }
+
+        .count-cell {
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container stats-container">
+        <header>
+            <a href="index.html" class="back-btn">← 메인으로</a>
+            <h1>가족 습관 현황표</h1>
+        </header>
+
+        <main>
+            <!-- Sua Stats -->
+            <div class="child-stats-section">
+                <div class="stats-header">
+                    <div class="user-avatar-small">👧</div>
+                    <h2>수아</h2>
+                    <div class="total-summary">총점: <span id="total-sua">0</span>점</div>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>아이콘</th>
+                            <th>습관 이름</th>
+                            <th>점수</th>
+                            <th>횟수</th>
+                            <th>획득 점수</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-sua">
+                        <!-- Dynamic Content -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Han Stats -->
+            <div class="child-stats-section">
+                <div class="stats-header">
+                    <div class="user-avatar-small">👦</div>
+                    <h2>한</h2>
+                    <div class="total-summary">총점: <span id="total-han">0</span>점</div>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>아이콘</th>
+                            <th>습관 이름</th>
+                            <th>점수</th>
+                            <th>횟수</th>
+                            <th>획득 점수</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-han">
+                        <!-- Dynamic Content -->
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            renderStats('sua');
+            renderStats('han');
+        });
+
+        function renderStats(userId) {
+            const habits = getHabits(userId);
+            const tableBody = document.getElementById(`table-${userId}`);
+            const totalEl = document.getElementById(`total-${userId}`);
+            let totalScore = 0;
+
+            tableBody.innerHTML = '';
+
+            habits.forEach(habit => {
+                const count = habit.count || 0;
+                const earned = count * habit.points;
+                totalScore += earned;
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="icon-cell">${habit.icon}</td>
+                    <td>${habit.title}</td>
+                    <td>${habit.points}점</td>
+                    <td class="count-cell">${count}회</td>
+                    <td>${earned}점</td>
+                `;
+                tableBody.appendChild(tr);
+            });
+
+            totalEl.textContent = totalScore;
+        }
+    </script>
+</body>
+
+</html>

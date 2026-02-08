@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>부모님 대시보드</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <a href="index.html" class="back-btn">← 메인으로</a>
+            <h1>부모님 관리 페이지</h1>
+        </header>
+
+        <main class="dashboard">
+            <!-- 수아 현황 -->
+            <div class="dashboard-card" id="card-sua">
+                <div class="user-avatar-small">👧</div>
+                <div class="current-score">
+                    <span id="score-sua">0</span> 점
+                </div>
+                <div class="habit-manager">
+                    <h3>👧 수아 - 습관 목록 관리</h3>
+                    <div id="habit-list-sua" class="habit-list-admin"></div>
+
+                    <div class="add-habit-form">
+                        <input type="text" id="new-habit-title-sua" placeholder="습관 이름 (예: 독서 30분)">
+                        <select id="new-habit-icon-sua">
+                            <option value="📚">📚 독서</option>
+                            <option value="✏️">✏️ 공부</option>
+                            <option value="🎨">🎨 미술</option>
+                            <option value="🎵">🎵 음악</option>
+                            <option value="⚽️">⚽️ 운동</option>
+                            <option value="🧹">🧹 정리</option>
+                            <option value="⭐️" selected>⭐️ 기타</option>
+                        </select>
+                        <select id="new-habit-points-sua">
+                            <option value="-5">-5점 (벌점)</option>
+                            <option value="5" selected>5점</option>
+                            <option value="10">10점</option>
+                        </select>
+                        <button class="add-btn" id="add-btn-sua" onclick="handleAddHabit('sua')">추가</button>
+                    </div>
+                </div>
+                <button class="reset-btn" onclick="resetUserScore('sua')">점수 초기화</button>
+            </div>
+
+            <!-- 한 현황 -->
+            <div class="dashboard-card" id="card-han">
+                <div class="user-avatar-small">👦</div>
+                <div class="current-score">
+                    <span id="score-han">0</span> 점
+                </div>
+                <div class="habit-manager">
+                    <h3>👦 한 - 습관 목록 관리</h3>
+                    <div id="habit-list-han" class="habit-list-admin"></div>
+
+                    <div class="add-habit-form">
+                        <input type="text" id="new-habit-title-han" placeholder="습관 이름 (예: 독서 30분)">
+                        <select id="new-habit-icon-han">
+                            <option value="📚">📚 독서</option>
+                            <option value="✏️">✏️ 공부</option>
+                            <option value="🎨">🎨 미술</option>
+                            <option value="🎵">🎵 음악</option>
+                            <option value="⚽️">⚽️ 운동</option>
+                            <option value="🧹">🧹 정리</option>
+                            <option value="⭐️" selected>⭐️ 기타</option>
+                        </select>
+                        <select id="new-habit-points-han">
+                            <option value="-5">-5점 (벌점)</option>
+                            <option value="5" selected>5점</option>
+                            <option value="10">10점</option>
+                        </select>
+                        <button class="add-btn" id="add-btn-han" onclick="handleAddHabit('han')">추가</button>
+                    </div>
+                </div>
+                <button class="reset-btn" onclick="resetUserScore('han')">점수 초기화</button>
+            </div>
+    </div>
+
+    <!-- 설정 -->
+    <div class="dashboard-card settings-card">
+        <h2>설정</h2>
+        <div class="password-change-form">
+            <h3>비밀번호 변경</h3>
+            <input type="password" id="current-password" placeholder="현재 비밀번호">
+            <input type="password" id="new-password" placeholder="새 비밀번호 (4자리 이상)">
+            <input type="password" id="confirm-password" placeholder="새 비밀번호 확인">
+            <button class="action-btn" onclick="changePassword()" style="margin-top: 10px;">변경하기</button>
+        </div>
+    </div>
+    </main>
+    </div>
+    <script src="app.js"></script>
+    <script>
+        // 페이지 로드 시 초기화
+        document.addEventListener('DOMContentLoaded', () => {
+            initParentPage();
+        });
+    </script>
+</body>
+
+</html>

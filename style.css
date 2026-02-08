@@ -1,0 +1,496 @@
+/* 기존 스타일 유지 및 확장 */
+:root {
+    --primary-color: #FFB74D;
+    --accent-color: #81C784;
+    --bg-color: #FFF9C4;
+    --text-color: #5D4037;
+    --white: #ffffff;
+    --danger-color: #FF8A65;
+}
+
+body {
+    font-family: 'Jua', sans-serif;
+    background-color: var(--bg-color);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    /* 상단 정렬로 변경 */
+    min-height: 100vh;
+    color: var(--text-color);
+}
+
+.container {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    box-sizing: border-box;
+    margin-top: 20px;
+    /* 상단 여백 추가 */
+}
+
+/* 랜딩 페이지 스타일 */
+.landing-container {
+    text-align: center;
+    margin-top: 10vh;
+}
+
+.user-selection {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width: 100%;
+}
+
+.user-grid {
+    display: flex;
+    justify-content: center;
+    /* Center cards horizontally */
+    gap: 15px;
+    flex-wrap: nowrap;
+    /* Force single row */
+}
+
+@media (max-width: 480px) {
+    .user-grid {
+        flex-wrap: wrap;
+        /* Only wrap on very small screens */
+    }
+}
+
+.user-card {
+    background-color: var(--white);
+    border-radius: 20px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: var(--text-color);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+    border: 3px solid transparent;
+    flex: 1;
+    /* Distribute space evenly */
+    min-width: 0;
+    /* Allow shrinking */
+}
+
+/* Full width card for Stats */
+.stats-card-full {
+    flex-direction: row;
+    /* Horizontal icon + text */
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+    max-width: 100%;
+    /* Override max-width */
+    box-sizing: border-box;
+    background: #e3f2fd;
+    border-color: #90caf9;
+}
+
+.stats-card-full .user-avatar {
+    margin-bottom: 0;
+    /* Reset margin */
+}
+
+.stats-text {
+    text-align: left;
+}
+
+.user-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+}
+
+.child-card:hover {
+    border-color: var(--accent-color);
+}
+
+.parent-card:hover {
+    border-color: var(--primary-color);
+}
+
+.user-avatar {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    background-color: #FFFDE7;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 헤더 및 공통 */
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    position: relative;
+    padding-top: 30px;
+    /* Add space for back button */
+}
+
+.back-btn {
+    position: absolute;
+    left: 0;
+    top: 0;
+    /* Position at the very top */
+    text-decoration: none;
+    color: #888;
+    font-size: 0.9rem;
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: #FF7043;
+    text-shadow: 2px 2px 0px #fff;
+    margin: 0;
+}
+
+/* 점수판 및 카드 */
+.score-board {
+    background-color: var(--white);
+    border-radius: 25px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    border: 3px solid var(--primary-color);
+}
+
+.score-display {
+    font-size: 4rem;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.habit-card {
+    background-color: var(--white);
+    border-radius: 20px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.action-btn {
+    background-color: var(--accent-color);
+    color: var(--white);
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    border-radius: 50px;
+    cursor: pointer;
+    font-family: 'Jua', sans-serif;
+    transition: all 0.2s;
+    width: 100%;
+}
+
+.action-btn:hover {
+    background-color: #66BB6A;
+}
+
+/* 부모님 대시보드 */
+.dashboard-card {
+    background-color: var(--white);
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.dashboard-card h2 {
+    margin: 0 10px;
+    flex-grow: 1;
+}
+
+.user-avatar-small {
+    font-size: 2rem;
+    background-color: #FFFDE7;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.reset-btn {
+    background-color: var(--danger-color);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: 'Jua', sans-serif;
+}
+
+/* 모달 */
+
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    width: 80%;
+    max-width: 300px;
+}
+
+.modal input {
+    font-size: 1.5rem;
+    padding: 10px;
+    margin: 15px 0;
+    width: 100%;
+    text-align: center;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.modal-buttons button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: 'Jua', sans-serif;
+    font-size: 1rem;
+}
+
+.cancel-btn {
+    background: #eee;
+}
+
+.confirm-btn {
+    background: var(--primary-color);
+    color: white;
+}
+
+
+/* 습관 관리 (Admin) */
+.habit-manager {
+    border-top: 2px dashed #eee;
+    margin-top: 20px;
+    padding-top: 20px;
+    width: 100%;
+}
+
+.habit-manager h3 {
+    margin-top: 0;
+    font-size: 1.2rem;
+    color: #555;
+}
+
+.habit-list-admin {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.admin-habit-item {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.habit-view-mode,
+.habit-edit-mode {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.habit-edit-mode {
+    flex-wrap: wrap;
+}
+
+.habit-edit-mode input,
+.habit-edit-mode select {
+    flex: 1;
+    min-width: 120px;
+}
+
+.habit-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.admin-habit-item button {
+    background: #ff8a80;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.add-habit-form {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+.add-habit-form input,
+.add-habit-form select {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: 'Jua', sans-serif;
+}
+
+.add-habit-form input {
+    flex-grow: 1;
+}
+
+.add-btn {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Jua', sans-serif;
+}
+
+/* 설정 (비밀번호 변경) */
+.settings-card {
+    display: block;
+    /* Override flex */
+}
+
+.password-change-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.password-change-form input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-family: 'Jua', sans-serif;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Custom Modal Styles */
+.custom-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+
+.custom-modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.custom-modal-content {
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    width: 80%;
+    max-width: 320px;
+    text-align: center;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    transform: scale(0.8);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.custom-modal-overlay.active .custom-modal-content {
+    transform: scale(1);
+}
+
+.custom-modal-title {
+    font-size: 1.3rem;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.custom-modal-message {
+    color: #555;
+    margin-bottom: 25px;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.custom-modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.custom-modal-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: 'Jua', sans-serif;
+    font-size: 1rem;
+    transition: background-color 0.2s;
+}
+
+.custom-modal-btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.custom-modal-btn-primary:hover {
+    background-color: #FFA726;
+}
+
+.custom-modal-btn-cancel {
+    background-color: #eee;
+    color: #555;
+}
+
+.custom-modal-btn-cancel:hover {
+    background-color: #e0e0e0;
+}
