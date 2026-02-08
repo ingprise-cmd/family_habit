@@ -551,3 +551,210 @@ function triggerConfetti() {
         });
     }
 }
+
+// --- Data Import/Export Functions ---
+
+/**
+ * Export habit data to CSV format (Google Sheets compatible)
+ * CSV Structure: 날짜,사용자,습관명,아이콘,포인트,완료횟수
+ */
+function exportToCSV() {
+    const data = JSON.parse(localStorage.getItem(HABIT_KEY) || '{}');
+    const currentDate = new Date().toISOString().split('T')[0];
+
+    // CSV Header
+    let csv = '날짜,사용자,습관명,아이콘,포인트,완료횟수\n';
+
+    // Add data for each user
+    Object.keys(USERS).forEach(userId => {
+        const userName = USERS[userId].name;
+        const habits = data[userId] || [];
+
+        habits.forEach(habit => {
+            const row = [
+                currentDate,
+                userName,
+                `"${habit.title}"`, // Quote to handle commas in title
+                habit.icon || '⭐️',
+                habit.points,
+                habit.count || 0
+            ].join(',');
+            csv += row + '\n';
+        });
+    });
+
+    // Download CSV file
+    downloadFile(csv, `습관트래커_${currentDate}.csv`, 'text/csv;charset=utf-8;');
+    showAlert('CSV 파일이 다운로드되었습니다!');
+}
+
+/**
+ * Import habit data from CSV file
+ */
+function importFromCSV(file) {
+    const reader = new FileReader();
+
+    reader.onload = function (e) {
+        try {
+            const csv = e.target.result;
+            const lines = csv.split('\n');
+
+            // Skip header
+            const dataLines = lines.slice(1).filter(line => line.trim());
+
+            const data = JSON.parse(localStorage.getItem(HABIT_KEY) || '{}');
+
+            // Parse CSV data
+            dataLines.forEach(line => {
+                const parts = line.split(',');
+                if (parts.length < 6) return;
+
+                const [date, userName, title, icon, points, count] = parts;
+
+                // Find userId by userName
+                const userId = Object.keys(USERS).find(id => USERS[id].name === userName.trim());
+                if (!userId) return;
+
+                // Clean title (remove quotes)
+                const cleanTitle = title.replace(/^"|"$/g, '').trim();
+
+                // Find or create habit
+                if (!data[userId]) data[userId] = [];
+
+                let habit = data[userId].find(h => h.title === cleanTitle);
+                if (habit) {
+                    // Update existing habit
+                    habit.icon = icon.trim();
+                    habit.points = parseInt(points);
+                    habit.count = parseInt(count) || 0;
+                } else {
+                    // Create new habit
+                    data[userId].push({
+                        id: 'h_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
+                        title: cleanTitle,
+                        desc: `${parseInt(points)}점 획득!`,
+                        icon: icon.trim(),
+                        points: parseInt(points),
+                        count: parseInt(count) || 0
+                    });
+                }
+            });
+
+            localStorage.setItem(HABIT_KEY, JSON.stringify(data));
+            showAlert('CSV 데이터를 성공적으로 불러왔습니다!', () => {
+                renderParentDashboard();
+            });
+
+        } catch (error) {
+            showAlert('CSV 파일을 읽는 중 오류가 발생했습니다: ' + error.message);
+        }
+    };
+
+    reader.readAsText(file, 'UTF-8');
+}
+
+/**
+ * Export all data to JSON format (full backup)
+ */
+function exportToJSON() {
+    const habitData = localStorage.getItem(HABIT_KEY) || '{}';
+    const password = localStorage.getItem(PASSWORD_KEY) || '1234';
+    const currentDate = new Date().toISOString().split('T')[0];
+
+    const backup = {
+        exportDate: currentDate,
+        version: '1.0',
+        habitData: JSON.parse(habitData),
+        password: password
+    };
+
+    const json = JSON.stringify(backup, null, 2);
+    downloadFile(json, `습관트래커_백업_${currentDate}.json`, 'application/json');
+    showAlert('JSON 백업 파일이 다운로드되었습니다!');
+}
+
+/**
+ * Import data from JSON backup file
+ */
+function importFromJSON(file) {
+    const reader = new FileReader();
+
+    reader.onload = function (e) {
+        try {
+            const backup = JSON.parse(e.target.result);
+
+            // Validate backup structure
+            if (!backup.habitData) {
+                throw new Error('올바른 백업 파일이 아닙니다.');
+            }
+
+            showConfirm(
+                '기존 데이터를 모두 덮어쓰시겠습니까? 이 작업은 되돌릴 수 없습니다.',
+                () => {
+                    // Restore data
+                    localStorage.setItem(HABIT_KEY, JSON.stringify(backup.habitData));
+
+                    if (backup.password) {
+                        localStorage.setItem(PASSWORD_KEY, backup.password);
+                    }
+
+                    showAlert('데이터를 성공적으로 복원했습니다!', () => {
+                        renderParentDashboard();
+                    });
+                }
+            );
+
+        } catch (error) {
+            showAlert('JSON 파일을 읽는 중 오류가 발생했습니다: ' + error.message);
+        }
+    };
+
+    reader.readAsText(file);
+}
+
+/**
+ * Helper function to download files
+ */
+function downloadFile(content, filename, mimeType) {
+    const blob = new Blob(['\uFEFF' + content], { type: mimeType }); // Add BOM for UTF-8
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+}
+
+/**
+ * Handle file input for CSV import
+ */
+function handleCSVImport(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    if (!file.name.endsWith('.csv')) {
+        showAlert('CSV 파일만 업로드할 수 있습니다.');
+        return;
+    }
+
+    importFromCSV(file);
+    event.target.value = ''; // Reset input
+}
+
+/**
+ * Handle file input for JSON import
+ */
+function handleJSONImport(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    if (!file.name.endsWith('.json')) {
+        showAlert('JSON 파일만 업로드할 수 있습니다.');
+        return;
+    }
+
+    importFromJSON(file);
+    event.target.value = ''; // Reset input
+}

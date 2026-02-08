@@ -494,3 +494,89 @@ h1 {
 .custom-modal-btn-cancel:hover {
     background-color: #e0e0e0;
 }
+
+/* Data Management Section */
+.data-management-card {
+    display: block;
+    background: linear-gradient(135deg, #E8F5E9 0%, #F1F8E9 100%);
+    border: 2px solid #81C784;
+}
+
+.data-management-card h2 {
+    margin: 0 0 20px 0;
+    color: #2E7D32;
+    font-size: 1.5rem;
+}
+
+.data-management-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.data-group {
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.data-group h3 {
+    margin: 0 0 12px 0;
+    font-size: 1.1rem;
+    color: #555;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+}
+
+.export-btn {
+    background: linear-gradient(135deg, #66BB6A, #81C784);
+    flex: 1;
+    min-width: 140px;
+}
+
+.export-btn:hover {
+    background: linear-gradient(135deg, #4CAF50, #66BB6A);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+.import-btn {
+    background: linear-gradient(135deg, #42A5F5, #64B5F6);
+    flex: 1;
+    min-width: 140px;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+}
+
+.import-btn:hover {
+    background: linear-gradient(135deg, #2196F3, #42A5F5);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+}
+
+.help-text {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #777;
+    line-height: 1.4;
+}
+
+/* Dashboard layout adjustments */
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.current-score {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--primary-color);
+}
